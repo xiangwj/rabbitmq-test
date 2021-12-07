@@ -15,9 +15,19 @@ public class ThreadTest {
 		int s1 =1,e1=100;
 		int s2=3,e2=300;
 		
-		System.out.println(doPeriod(1,100,3,300));
-		System.out.println(doPeriod(3,300,1,100));
+		System.out.println(doPeriod("19:00","20:00","19:20","21:00"));
+		System.out.println(doPeriod("21:00","23:00","22:59","23:59"));
 		
+	}
+	public int doPeriod(String st1,String se1,String st2,String et2) {
+		int s1 = Integer.parseInt(st1.split(":")[0])*60+Integer.parseInt(st1.split(":")[1]);
+		int e1 = Integer.parseInt(se1.split(":")[0])*60+Integer.parseInt(se1.split(":")[1]);
+		
+		int s2 = Integer.parseInt(st2.split(":")[0])*60+Integer.parseInt(st2.split(":")[1]);
+		int e2 = Integer.parseInt(et2.split(":")[0])*60+Integer.parseInt(et2.split(":")[1]);
+		
+		
+		return doPeriod( s1, e1, s2, e2);
 	}
 	public int doPeriod(int s1,int e1,int s2,int e2) {
 		int result=0;
