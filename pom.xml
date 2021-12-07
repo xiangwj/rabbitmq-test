@@ -13,6 +13,7 @@
 	</parent>
 	<properties>
 	<junit.version>4.12</junit.version>
+	<lombok.version>1.18.12</lombok.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -21,7 +22,12 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
             <version>2.2.1.RELEASE</version>
         </dependency>
-
+		<dependency>
+		    <groupId>org.springframework.amqp</groupId>
+		    <artifactId>spring-rabbit-test</artifactId>
+		    <version>2.1.1.RELEASE</version>
+		    <scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -51,7 +57,27 @@
 		    <artifactId>junit</artifactId>
 		    <version>4.13.2</version>
 		    <scope>test</scope>
-		</dependency>		  
+		</dependency>		
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.78</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>					  
 		</dependencies>
 	</dependencyManagement>  
 	<modules>
