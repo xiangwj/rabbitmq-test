@@ -19,7 +19,8 @@ public class TtlQueueConfig {
 
 	private static final String QUEUE_A = "A";
 	private static final String QUEUE_B = "B";
-
+	private static final String QUEUE_C = "C";
+	
 	private static final String DEAD_LETER_QUEUE = "QD";
 
 	@Bean("xExchange")
@@ -48,6 +49,15 @@ public class TtlQueueConfig {
 		arguments.put("x-message-ttl", 40 * 1000);
 		return QueueBuilder.durable(QUEUE_B).withArguments(arguments).build();
 	}	
+	
+	@Bean("queueC")
+	public Queue queueC() {
+		Map<String, Object> arguments = new HashMap<>(3);
+		arguments.put("x-dead-letter-exchange", Y_DEAD_LETTER_EXCHANGE);
+		arguments.put("x-dead-letter-routing-key", "YD");
+		return QueueBuilder.durable(QUEUE_C).withArguments(arguments).build();
+	}	
+	
 	@Bean("queueD")
 	public Queue queueD() {
 		return QueueBuilder.durable(DEAD_LETER_QUEUE).build();
@@ -60,6 +70,12 @@ public class TtlQueueConfig {
 	public Binding QueueBBingX(@Qualifier(value="queueB") Queue queueB,@Qualifier("xExchange") DirectExchange xExchange) {
 		return  BindingBuilder.bind(queueB).to(xExchange).with("XB");
 	}
+	
+	@Bean
+	public Binding QueueCBingX(@Qualifier(value="queueC") Queue queueC,@Qualifier("xExchange") DirectExchange xExchange) {
+		return  BindingBuilder.bind(queueC).to(xExchange).with("XC");
+	}
+	
 	@Bean
 	public Binding QueueDBingX(@Qualifier(value="queueD") Queue queueD,@Qualifier("yExchange") DirectExchange yExchange) {
 		return  BindingBuilder.bind(queueD).to(yExchange).with("YD");

@@ -2,6 +2,9 @@ package org.rabbitmq.controller;
 
 import java.util.Date;
 
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +27,23 @@ public class SendMessageController {
 		log.info("当前时间{},发送一条信息给两个队列{}",new Date().toString(),message);
 		
 	}
-	
+	@GetMapping("/sendExpirationMsg/{message}/{ttltime}")
+	public void sendMsg(@PathVariable("message")  String message,@PathVariable("ttltime") String ttltime) {
+		rabbitTemplate.convertAndSend("X","XC", message, new MessagePostProcessor(){
+
+			@Override
+			public Message postProcessMessage(Message message) throws AmqpException {
+				message.getMessageProperties().setExpiration(ttltime);
+				return message;
+			}
+			
+		});
+		
+		
+//		.convertAndSend("X","Xc","消息来自ttl为10s");
+		
+		log.info("当前时间{},发送一条时长为{}毫秒的信息给QC{}",new Date().toString(),ttltime,message);
+		
+	}	
 
 }
