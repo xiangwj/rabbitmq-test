@@ -16,7 +16,7 @@ public class ReceiveLogsDirect2 {
 		channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 		channel.queueDeclare("disk", false, false, false, null);
 		channel.queueBind("disk", EXCHANGE_NAME, "error");
-		channel.basicConsume("console", true, (consumerTag, message)->{
+		channel.basicConsume("disk", true, (consumerTag, message)->{
 			System.out.println("ReceiveLogsDirect2接到的消息:"+new String(message.getBody()));
 		},consumerTag->{});
 	}
