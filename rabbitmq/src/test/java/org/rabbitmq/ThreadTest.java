@@ -17,6 +17,9 @@ public class ThreadTest {
 		
 		System.out.println(doPeriod("19:00","20:00","19:20","21:00"));
 		System.out.println(doPeriod("21:00","23:00","22:59","23:59"));
+		System.out.println(doPeriod("14:00","14:30","14:30","14:45"));
+		System.out.println(doPeriod("14:00","14:30","15:30","15:45"));
+		System.out.println(doPeriod("14:00","14:30","00:30","15:45"));
 		
 	}
 	public int doPeriod(String st1,String se1,String st2,String et2) {
