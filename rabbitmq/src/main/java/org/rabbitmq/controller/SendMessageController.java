@@ -2,6 +2,7 @@ package org.rabbitmq.controller;
 
 import java.util.Date;
 
+import org.rabbitmq.config.DelayedQueueConfig;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
@@ -38,12 +39,20 @@ public class SendMessageController {
 			}
 			
 		});
-		
-		
-//		.convertAndSend("X","Xc","消息来自ttl为10s");
-		
 		log.info("当前时间{},发送一条时长为{}毫秒的信息给QC{}",new Date().toString(),ttltime,message);
-		
-	}	
+	}
+	@GetMapping("/sendPlugMsg/{message}/{ttltime}")
+	public void sendPlugMsg(@PathVariable("message")  String message,@PathVariable("ttltime") Integer ttltime) {
+		rabbitTemplate.convertAndSend(DelayedQueueConfig.DELAYED_EXCHANGE_NAME,DelayedQueueConfig.DELAYED_ROUTE_KEY, message, new MessagePostProcessor(){
+
+			@Override
+			public Message postProcessMessage(Message message) throws AmqpException {
+				message.getMessageProperties().setDelay(ttltime);
+				return message;
+			}
+			
+		});
+		log.info("当前时间{},发送一条时长为{}毫秒的信息给QC{}",new Date().toString(),ttltime,message);
+	}
 
 }
