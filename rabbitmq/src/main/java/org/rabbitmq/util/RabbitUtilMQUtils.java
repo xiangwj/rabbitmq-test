@@ -8,7 +8,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 public class RabbitUtilMQUtils {
-	public static String IPADDRESS="192.168.137.120";
+	public static String IPADDRESS="192.168.137.121";
 	public static String USERNAME="admin";
 	public static String PASSWORD="111111";
 	public static String QUEUE_NAME="hello";
